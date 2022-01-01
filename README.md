@@ -1,5 +1,5 @@
 # nordigen-cache
-Asynchronously fetch data from the Nordigen Transaction API using AWS Lambda functions.
+Asynchronously fetch transaction data from the Nordigen Account Information API using AWS Lambda functions.
 
 Nordigen provides an API abstraction layer for a wide array of banking institutions that support the Open Banking API standards.
 
