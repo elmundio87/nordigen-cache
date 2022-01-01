@@ -34,6 +34,7 @@ jobs:
           handler: index.lambda_handler
           environment: bucket_name=${{ secrets.BUCKET_NAME }}
   test:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -42,4 +43,5 @@ jobs:
           python-version: '3.9'
       - name: Test functions
         run: |
+          pip install urllib3
           python test.py ${{ secrets.LAMBDA_BASE_URL }} ${{ secrets.LAMBDA_API_KEY }} ${{ secrets.NORDIGEN_SECRET_ID }} ${{ secrets.NORDIGEN_SECRET_KEY }} ${{ secrets.NORDIGEN_ACCOUNT_ID }}
