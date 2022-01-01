@@ -1,0 +1,33 @@
+name: CI
+on:
+  push:
+    branches:
+      - 'main'
+      - 'master'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+    matrix:
+        function: [ nordigen-cache, nordigen-cache-async, nordigen-cache-geturl ]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Build project
+        run: |
+          pwd
+          if [[ -f "requirements.txt" ]]; then
+            pip install --target . -r requirements.txt
+          fi
+          zip -r ../${{ matrix.function }}.zip .
+        working-directory: ${{ matrix.function }}
+      - name: AWS Lambda Deploy
+        uses: appleboy/lambda-action@master
+        with:
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          function_name: ${{ matrix.function }}
+          zip_file: ${{ matrix.function }}.zip
