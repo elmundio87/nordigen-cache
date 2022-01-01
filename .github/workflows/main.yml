@@ -31,4 +31,4 @@ jobs:
           aws_region: ${{ secrets.AWS_REGION }}
           function_name: ${{ matrix.function }}
           zip_file: ${{ matrix.function }}.zip
-          handler: ${{ matrix.function }}.lambda_handler
+          handler: index.lambda_handler
