@@ -32,3 +32,4 @@ jobs:
           function_name: ${{ matrix.function }}
           zip_file: ${{ matrix.function }}.zip
           handler: index.lambda_handler
+          environment: bucket_name=${{ secrets.BUCKET_NAME }}
