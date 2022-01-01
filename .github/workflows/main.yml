@@ -8,8 +8,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-    matrix:
-        function: [ nordigen-cache, nordigen-cache-async, nordigen-cache-geturl ]
+      matrix:
+          function: [ nordigen-cache, nordigen-cache-async, nordigen-cache-geturl ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
