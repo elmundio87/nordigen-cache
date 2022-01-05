@@ -19,7 +19,7 @@ def lambda_handler(event, context):
     errors = []
 
     for param in mandatory_params:
-      if not params.has_key(param):
+      if not param in params:
         errors.append("Missing param: {0}".format(param))
 
     if len(errors) > 0:
