@@ -6,7 +6,6 @@ import os
 http = urllib3.PoolManager()
 s3 = boto3.client('s3')
 
-
 def lambda_handler(event, context):
     get_results(event['account_id'], event['access_token'], event['seed'])
     return {
@@ -15,7 +14,7 @@ def lambda_handler(event, context):
           "Access-Control-Allow-Origin" : "*",
           "Access-Control-Allow-Credentials" : True
         },
-        'body': json.dumps('Hello from Lambda!')
+       'body': json.dumps('Triggered!')
     }
 
 def get_results(account_id, access_token, seed):

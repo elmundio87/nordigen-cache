@@ -9,12 +9,9 @@ s3 = boto3.client('s3', 'eu-west-2', config=Config(s3={'addressing_style': 'path
 bucket_name = os.environ['bucket_name']
 
 def lambda_handler(event, context):
-    params = json.loads(event['body'])
 
     f = BytesIO()
-
     s3.download_fileobj(bucket_name, 'ref.txt', f)
-
     seed = f.getvalue().decode('utf-8')
 
     while(not does_file_exist(seed)):

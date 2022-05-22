@@ -13,12 +13,22 @@ def lambda_handler(event, context):
 
     bucket_name = os.environ['bucket_name']
     key = 'ref.txt'
-    body = seed
 
     params = json.loads(event['body'])
+    mandatory_params = ['account_id', 'access_token']
+    errors = []
 
+    for param in mandatory_params:
+      if not param in params:
+        errors.append("Missing param: {0}".format(param))
 
-    s3.put_object(Bucket=bucket_name, Key=key, Body=body)
+    if len(errors) > 0:
+      return {
+        'statusCode': 400,
+        'body': json.dumps(errors)
+      }
+
+    s3.put_object(Bucket=bucket_name, Key=key, Body=seed)
     lambdaInput = { "account_id": params["account_id"], "access_token": params["access_token"], "seed": seed }
     invokeLambdaFunction(functionName='nordigen-cache-async',  payload=lambdaInput)
 
